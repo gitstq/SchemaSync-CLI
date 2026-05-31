@@ -1,0 +1,2 @@
+[console_scripts]
+schemasync = schemasync.cli:main

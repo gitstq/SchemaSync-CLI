@@ -1,0 +1,138 @@
+Metadata-Version: 2.4
+Name: schemasync-cli
+Version: 1.0.0
+Summary: A lightweight database schema migration tool
+Home-page: https://github.com/gitstq/SchemaSync-CLI
+Author: SchemaSync Team
+Author-email: 
+License: MIT
+Project-URL: Homepage, https://github.com/gitstq/SchemaSync-CLI
+Project-URL: Repository, https://github.com/gitstq/SchemaSync-CLI
+Project-URL: Issues, https://github.com/gitstq/SchemaSync-CLI/issues
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Database
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: click>=8.0.0
+Requires-Dist: pyyaml>=6.0
+Provides-Extra: postgresql
+Requires-Dist: psycopg2-binary>=2.9.0; extra == "postgresql"
+Provides-Extra: mysql
+Requires-Dist: pymysql>=1.0.0; extra == "mysql"
+Provides-Extra: all
+Requires-Dist: psycopg2-binary>=2.9.0; extra == "all"
+Requires-Dist: pymysql>=1.0.0; extra == "all"
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0.0; extra == "dev"
+Requires-Dist: pytest-cov>=4.0.0; extra == "dev"
+Requires-Dist: black>=23.0.0; extra == "dev"
+Requires-Dist: flake8>=6.0.0; extra == "dev"
+Requires-Dist: mypy>=1.0.0; extra == "dev"
+Dynamic: home-page
+Dynamic: license-file
+Dynamic: requires-python
+
+# SchemaSync-CLI
+
+A lightweight, developer-friendly database schema migration tool for SQLite, PostgreSQL, and MySQL.
+
+## Features
+
+- 🚀 **Multi-Database Support** - Works with SQLite, PostgreSQL, and MySQL
+- 📝 **Version Control** - Track schema changes like Git tracks code
+- 🔄 **Easy Rollback** - Revert migrations when needed
+- 💾 **Automatic Backups** - Backup before migrations for safety
+- 🔍 **Dry Run Mode** - Preview changes before applying
+- 🎯 **Simple CLI** - Intuitive commands for all operations
+
+## Quick Start
+
+### Installation
+
+```bash
+pip install schemasync-cli
+```
+
+### Initialize Project
+
+```bash
+schemasync init
+```
+
+### Create a Migration
+
+```bash
+schemasync create "add users table"
+```
+
+### Check Status
+
+```bash
+schemasync status
+```
+
+### Run Migrations
+
+```bash
+schemasync migrate
+```
+
+### Rollback
+
+```bash
+schemasync rollback
+```
+
+## Configuration
+
+Create `schemasync.yaml` in your project root:
+
+```yaml
+database:
+  driver: sqlite  # sqlite, postgresql, mysql
+  host: localhost
+  port: 5432
+  name: mydb
+  user: dbuser
+  password: dbpass
+
+migrations:
+  directory: migrations
+  table_name: schema_migrations
+  backup_before_migrate: true
+```
+
+## Migration File Format
+
+```python
+revision = '20250101000001'
+down_revision = None
+
+def upgrade():
+    return """
+    CREATE TABLE users (
+        id INTEGER PRIMARY KEY,
+        username VARCHAR(255) NOT NULL
+    );
+    """
+
+def downgrade():
+    return """
+    DROP TABLE users;
+    """
+```
+
+## License
+
+MIT License
